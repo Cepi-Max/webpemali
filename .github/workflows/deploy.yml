@@ -29,6 +29,20 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Create SQLite database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Update .env for CI
+        run: |
+          sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
+          sed -i 's/DB_DATABASE=.*$/DB_DATABASE=database\/database.sqlite/g' .env
+          php artisan key:generate
+
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
 
