@@ -29,6 +29,9 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
       - name: Create SQLite database
         run: |
           mkdir -p database
@@ -42,9 +45,6 @@ jobs:
           sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
           sed -i 's/DB_DATABASE=.*$/DB_DATABASE=database\/database.sqlite/g' .env
           php artisan key:generate
-
-      - name: Install Composer dependencies
-        run: composer install --no-dev --optimize-autoloader
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
