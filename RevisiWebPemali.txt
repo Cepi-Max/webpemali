@@ -1,0 +1,3 @@
+PERBAIKI BANNER IMG MENJADI FULLL ROW,
+Membuat komentar Umkm,
+Memperbaiki tampilan profile(visi misi)->pake gambar sebelhanya teks penjelasan

@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('kewilayahan_desa_cantik', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_fasilitas');
+            $table->foreignId('kewilayahan_kategori_id')->constrained(
+                table: 'kewilayahan_kategori',
+                indexName: 'kewilayahan_kategori_id' 
+            );
+            $table->decimal('latitude', 10, 6);
+            $table->decimal('longitude', 10, 6);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('kewilayahan_desa_cantik');
+    }
+};

@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('notifikasis', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('pengaju_id')->constrained('users')->onDelete('cascade'); // user pengaju
+            $table->foreignId('pengajuan_surat_id')->nullable()->constrained('surat')->onDelete('cascade'); // relasi ke pengajuan
+            $table->foreignId('jenis_surat_id')->constrained('jenis_surat')->onDelete('cascade'); // relasi ke jenis_surat
+            $table->string('pesan');
+            $table->boolean('dibaca')->default(false);
+            $table->timestamps();
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('notifikasis');
+    }
+};
